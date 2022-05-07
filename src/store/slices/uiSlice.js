@@ -12,6 +12,7 @@ const UISlice = createSlice({
     dialogTitle: null,
     dialogContent: null,
     dialogActions: null,
+    dialogState: {},
     snackbars: [],
   },
   reducers: {
@@ -27,12 +28,16 @@ const UISlice = createSlice({
       state.isFetching = action.payload;
     },
     showDialog: (state, action) => {
-      const { title, props, content, actions } = action.payload;
+      const { title, props, content, actions, data } = action.payload;
       state.dialogOpen = true;
       state.dialogProps = props || null;
       state.dialogTitle = title;
       state.dialogContent = content;
       state.dialogActions = actions;
+      state.dialogState = data || {};
+    },
+    updateDialogState: (state, action) => {
+      state.dialogState = action.payload;
     },
     closeDialog: (state) => {
       state.dialogOpen = false;
@@ -67,6 +72,7 @@ export const {
   toggleDrawer,
   changeFetching,
   showDialog,
+  updateDialogState,
   closeDialog,
   enqueueSnackbar,
   closeSnackbar,
